@@ -5,9 +5,163 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #fafafa;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+header {
+  height: 48px;
+  background: #f56a29;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-center {
+  max-width: 1000px;
+  width: 100%;
+  text-align: left;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.pagination {
+  display: inline-block;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+ul.pagination li {
+  display: inline;
+}
+
+ul.pagination li a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  border: 1px solid #ddd;
+}
+
+.pagination li:first-child a {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination li:last-child a {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+ul.pagination li a.active {
+  background-color: #f56a29;
+  color: white;
+  border: 1px solid #f56a29;
+}
+
+ul.pagination li a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.filter {
+  height: 100px;
+  width: 100%;
+  background: #e6e6e6;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offers {
+  max-width: 1000px;
+  width: 100%;
+  text-align: left;
+}
+
+.offer-card {
+  background: white;
+  border: 1px solid #dedede;
+  padding: 10px;
+  display: flex;
+  cursor: pointer;
+}
+
+.offer-card-image {
+  background: #d6d0d0;
+  width: 140px;
+  object-fit: contain;
+  align-self: flex-start;
+  height: 110px;
+}
+
+.offer-card-image img {
+  width: 140px;
+  height: 110px;
+  border: 0px;
+}
+
+.offer-card-text {
+  margin: 0 0 0 20px;
+  flex: 1 1 auto;
+}
+
+.offer-card-title {
+  color: #366897;
+}
+
+.offer-card-price {
+  color: #f56a29;
+}
+
+.offer-page {
+  max-width: 1100px;
+  text-align: left;
+  display: flex;
+}
+
+.offer-page-img-text {
+  background: white;
+  border: 1px solid #d6d0d0;
+}
+.offer-page-img {
+  background: #d6d0d0;
+  width: 600px;
+  object-fit: contain;
+  align-self: flex-start;
+  height: 460px;
+}
+
+.offer-page-text {
+  margin: 10px;
+}
+
+.offer-page-price {
+  color: #f56a29;
+}
+
+.offer-page-creator {
+  background: white;
+  border: 1px solid #d6d0d0;
+  margin-left: 100px;
+  width: 350px;
+  height: 100px;
+  display: inline-flex;
 }
