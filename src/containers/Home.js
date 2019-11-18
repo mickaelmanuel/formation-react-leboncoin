@@ -1,9 +1,7 @@
 import React from "react";
-import { generateFilterParameters } from "../Api";
 import { useQuery } from "../App";
 import { Filter } from "../components/controls/Filter";
 import OffersList from "../components/controls/OffersList";
-import { getFilterKeyValue } from "../utils";
 
 export class Home extends React.Component {
   constructor(props) {

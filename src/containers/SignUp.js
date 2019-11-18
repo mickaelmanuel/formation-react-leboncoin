@@ -1,12 +1,7 @@
 import React from "react";
-import { generateFilterParameters } from "../Api";
-import { useQuery } from "../App";
-import { Filter } from "../components/controls/Filter";
-import OffersList from "../components/controls/OffersList";
-import { getFilterKeyValue } from "../utils";
 import { Input } from "../components/controls/Input";
 import { Button } from "../components/controls/Button";
-import { Api, Axios } from "../Api";
+import { Axios } from "../Api";
 
 export class SignUp extends React.Component {
   state = {
