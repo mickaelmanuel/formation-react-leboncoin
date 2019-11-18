@@ -1,4 +1,5 @@
 import axios from "axios";
+import { generateFilterParameters } from "./utils";
 
 export const Axios = axios.create({
   baseURL: "https://leboncoin-api.herokuapp.com/api/"
@@ -24,16 +25,37 @@ export const Api = {
       console.log(error);
     });
     return res.data;
+  },
+
+  postUser: async (email, username, password) => {
+    const message = {
+      email: email,
+      username: username,
+      password: password
+    };
+
+    await Axios.post("/user/sign_up", message)
+      .then(async result => {
+        return result;
+      })
+      .catch(error => {
+        throw error;
+      });
+  },
+
+  loginUser: async (email, password) => {
+    const message = {
+      email: email,
+      password: password
+    };
+
+    await Axios.post("/user/log_in", message)
+      .then(async result => {
+        console.log("result", result);
+        return result;
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 };
-
-export function generateFilterParameters(tabFilter, parameters) {
-  tabFilter.forEach(element => {
-    if (parameters === "") {
-      parameters = "?" + element.key + "=" + element.value;
-    } else {
-      parameters = parameters + "&" + element.key + "=" + element.value;
-    }
-  });
-  return parameters;
-}

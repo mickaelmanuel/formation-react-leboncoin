@@ -1,8 +1,10 @@
 import React from "react";
-import List from "./List";
+import { List } from "./List";
 import Offer from "./Offer";
 import Pagination from "./Pagination";
 import { Api } from "../../Api";
+import { useQuery } from "../../App";
+import { getFilterKeyValue } from "../../utils";
 
 const PAGE_RANGE_DISPLAYED = 15;
 const OFFERS_PER_PAGE = 6;
@@ -13,21 +15,52 @@ class OffersList extends React.Component {
     error: false,
     offers: [],
     offersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    query: null
   };
 
-  componentDidMount() {
+  getFilteredObject(query) {
+    let tmpQuery = useQuery(query);
+
+    var filter = {
+      sort: tmpQuery.has("sort") ? tmpQuery.get("sort") : "",
+      priceMin: tmpQuery.has("priceMin")
+        ? parseInt(tmpQuery.get("priceMin"), 10)
+        : NaN,
+      priceMax: tmpQuery.has("priceMax")
+        ? parseInt(tmpQuery.get("priceMax"))
+        : NaN,
+      title: tmpQuery.has("title") ? tmpQuery.get("title") : ""
+    };
+    return filter;
+  }
+
+  loadDatas(query) {
     this.setState({ isLoading: true });
 
-    Api.getOffers(this.state.currentPage, OFFERS_PER_PAGE, this.props.query)
+    let filterObjFromQuery = this.getFilteredObject(query);
+    let tabFilter = getFilterKeyValue(filterObjFromQuery);
+
+    Api.getOffers(this.state.currentPage, OFFERS_PER_PAGE, tabFilter)
       .then(data => {
         this.setState({
-          offers: data,
+          offers: data.offers,
           isLoading: false,
           offersCount: data.count
         });
       })
       .catch(e => this.setState({ isLoading: false, error: true }));
+  }
+
+  componentDidMount() {
+    this.loadDatas(this.props.query);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.query !== this.props.query) {
+      this.setState({ query: this.props.query });
+      return this.loadDatas(this.props.query);
+    }
   }
 
   render() {
@@ -62,7 +95,10 @@ class OffersList extends React.Component {
         </List>
         <Pagination
           totalItemsCount={this.state.offersCount}
-          onChange={async e => {}}
+          onChange={async e => {
+            this.setState({ currentPage: e });
+            this.loadDatas(this.props.query);
+          }}
           activePage={this.state.currentPage}
           itemsCountPerPage={OFFERS_PER_PAGE}
           pageRangeDisplayed={PAGE_RANGE_DISPLAYED}

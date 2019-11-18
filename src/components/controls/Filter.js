@@ -1,16 +1,30 @@
 import React from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
+import { getFilterKeyValue, generateFilterParameters } from "../../utils";
 
 export class Filter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sort: this.props.sort,
-      priceMin: this.props.priceMin,
-      priceMax: this.props.priceMax,
-      title: this.props.title
-    };
+  state = {
+    sort: this.props.sort,
+    priceMin: this.props.priceMin,
+    priceMax: this.props.priceMax,
+    title: this.props.title
+  };
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.sort !== this.props.sort ||
+      prevProps.priceMin !== this.props.priceMin ||
+      prevProps.priceMax !== this.props.priceMax ||
+      prevProps.title !== this.props.title
+    ) {
+      this.setState({
+        sort: this.props.sort,
+        priceMin: this.props.priceMin,
+        priceMax: this.props.priceMax,
+        title: this.props.title
+      });
+    }
   }
 
   render() {
@@ -19,7 +33,7 @@ export class Filter extends React.Component {
         <Input
           name="title"
           placeholder="Que recherchez-vous ?"
-          text={this.state.title}
+          value={this.state.title}
           onTextChange={e => {
             this.setState({ title: e.target.value });
           }}
@@ -30,6 +44,8 @@ export class Filter extends React.Component {
             type="number"
             placeholder="Prix min"
             name="priceMin"
+            min={0}
+            value={this.state.priceMin}
             onTextChange={e => {
               this.setState({ priceMin: parseInt(e.target.value, 10) });
             }}
@@ -38,6 +54,8 @@ export class Filter extends React.Component {
             name="priceMax"
             type="number"
             placeholder="Prix max"
+            min={0}
+            value={this.state.priceMax}
             onTextChange={e => {
               this.setState({ priceMax: parseInt(e.target.value, 10) });
             }}
@@ -45,7 +63,14 @@ export class Filter extends React.Component {
         </div>
         <Button
           onClick={() => {
-            this.props.onSearch(this.state);
+            let params = "";
+            let tab = getFilterKeyValue(this.state);
+            params = generateFilterParameters(tab, params);
+
+            this.props.history.push({
+              pathname: "/",
+              search: params
+            });
           }}
         >
           Rechercher

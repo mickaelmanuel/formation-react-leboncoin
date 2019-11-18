@@ -5,7 +5,8 @@ export const Input = ({
   name,
   onTextChange,
   value,
-  type = "text"
+  type = "text",
+  min = 0
 }) => (
   <div>
     <input
@@ -14,6 +15,7 @@ export const Input = ({
       placeholder={placeholder}
       onChange={onTextChange}
       value={value}
+      min={min}
     />
   </div>
 );
